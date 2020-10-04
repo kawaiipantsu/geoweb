@@ -7,10 +7,26 @@ speed = 1;
 canvas = document.querySelector("#canvas");
 ctx = canvas.getContext("2d");
 points = [];
+mouseX = canvas.width/2;  // You can use these coordinates to play with your geoweb (Mouse posistion X inside canvas)
+mouseY = canvas.height/2; // You can use these coordinates to play with your geoweb (Mouse posistion Y inside canvas)
 
 onResize();
 step();
+
 window.addEventListener("resize", onResize);
+canvas.addEventListener('mousemove', function(evt) {
+  var mouseCoordinates = updateMouseCoordinates(canvas, evt);
+  mouseX = mouseCoordinates.x;
+  mouseY = mouseCoordinates.y;
+}, false);
+
+function updateMouseCoordinates(canvas, evt) {
+  var rect = canvas.getBoundingClientRect();
+  return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+  };
+}
 
 function onResize() {
   canvas.width = canvas.clientWidth;
